@@ -1,0 +1,5 @@
+pokerogue/
+.DS_Store
+.vscode
+node_modules/
+src/

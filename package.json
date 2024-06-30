@@ -1,0 +1,20 @@
+{
+  "name": "pokerogue-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "copy-files": "node copy-files.js",
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "dependency-cruiser": "^16.3.4",
+    "fs-extra": "^11.2.0",
+    "glob": "^10.4.2",
+    "typescript": "^5.5.2"
+  }
+}

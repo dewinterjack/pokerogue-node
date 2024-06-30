@@ -1,0 +1,25 @@
+name: Update and Build Library
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Clone public repository
+        run: |
+          git clone --depth 1 --branch main https://github.com/pagefaultgames/pokerogue.git
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Copy files from public repository
+        run: npm run copy-files
+
+      - name: Build the library
+        run: npm run build
