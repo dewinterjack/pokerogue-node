@@ -11,7 +11,7 @@ const sourceDir = path.join(__dirname, 'pokerogue/src');
 const destDir = path.join(__dirname, 'src');
 const configPath = path.join(__dirname, 'pokerogue/.dependency-cruiser.cjs');
 const dependencyCruiserConfig = import(configPath);
-const relevantDirs = ['data', 'enums'];
+const relevantDirs = ['data'];
 
 const getAllFilesInDirs = (dirs) => {
   return dirs.flatMap(dir => glob.sync(`${sourceDir}/${dir}/**/*.ts`));
@@ -20,8 +20,13 @@ const getAllFilesInDirs = (dirs) => {
 const getDependencies = async (file) => {
   const result = await cruise([file], {
     //...dependencyCruiserConfig,
-    includeOnly: '^src/(data|enums)',
     exclude: 'node_modules',
+    progress: {
+      "type": "cli-feedback"
+    },
+    tsConfig: {
+      fileName: path.join(__dirname, 'pokerogue/tsconfig.json')
+    }
   });
   return result.output.modules.map(mod => mod.source);
 };
@@ -45,7 +50,8 @@ const copyFiles = async () => {
   for (const file of files) {
     await copyFileWithDependencies(file);
   }
-  console.log('All files copied successfully!');
+  await fs.copy(path.join(__dirname, 'pokerogue/tsconfig.json'), path.join(__dirname, 'tsconfig.json'));
+  console.log('\nAll files copied successfully!');
 };
 
 copyFiles().catch(console.error);
